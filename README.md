@@ -1,2 +1,27 @@
 # python-email
-Bash script to create README.md file, initialize a .git repository, commit create remote repo and push to https://www.github.com
+
+Small application to automate email communication
+
+Create a virtual environment.
+
+```
+python3 -m venv path/to/your-env
+```
+
+Activate your virtual environment. On Windows:
+
+```
+your-env\Scripts\activate.bat
+```
+
+On Linux or MacOS:
+
+```
+source your-env/bin/activate
+```
+
+Install dependencies
+
+```
+pip install -r dependencies.txt
+```

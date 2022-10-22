@@ -11,22 +11,16 @@ email_sender = os.getenv("EMAIL_SENDER")
 email_password = os.getenv("EMAIL_PASSWORD")
 email_receiver = os.getenv("EMAIL_RECEIVER")
 
+
 class Email():
     def __init__(self):
         pass
 
-    def send(self, json = None):
-        subject = 'Nasa Content api.nasa.gov/planetary/apod'
-        body = """
-        This is a test email, send from python script to automate the process.
-        
-        title : {}
-        explanation : {}
-        imageURL : {}
-        imageHDURL : {}
-        media_type : {}
-        date : {}
-        """.format(json['title'],json['explanation'],json['url'],json['hdurl'],json['media_type'],json['date'])
+    def send(self, message=None):
+        subject = 'Email Automation with Python'
+        body = "\n".join(["""
+        This is a test email, send from python script to automate the process.   
+        """, message])
 
         em = EmailMessage()
         em['From'] = email_sender

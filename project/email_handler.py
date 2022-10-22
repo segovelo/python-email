@@ -50,9 +50,10 @@ class Email():
             print(f'Exception Occured ! \n {ex}')
 
     def sendFile(self, file_path=None):
+        print(f'Sending email with attachment...')
         if file_path is None:
             file_path = env_file_path
-        print(f'Sending email with attachment... {file_path}')
+        file_ext = self.file_extension(file_path)
         try:
             smtp_server = 'smtp.gmail.com'
             smtp_port = 465
@@ -68,7 +69,7 @@ class Email():
             em.attach(body)
 
             with open(file_path, "rb") as attachment:
-                p = MIMEApplication(attachment.read(), _subtype="pdf")
+                p = MIMEApplication(attachment.read(), _subtype=file_ext)
                 p.add_header(
                     'Content-Disposition', "attachment; filename= %s" % file_path.split("\\")[-1])
                 em.attach(p)
@@ -85,3 +86,18 @@ class Email():
             print("Email was sent Successfully...")
         except Exception as ex:
             print(f'Exception Occured ! \n {ex}')
+
+    def check_file(self, file_name):
+        file_name = file_name.translate(
+            {ord(i): None for i in '!#@{}[]<>=+£$%^&*()?|,;:/\\\'\"'})
+        return file_name
+
+    def file_extension(self, file_path):
+        i = -1
+        c = file_path[i]
+        file_ext = ""
+        while c != '.':
+            file_ext = ''.join([c, file_ext])
+            i = i - 1
+            c = file_path[i]
+        return file_ext

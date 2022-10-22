@@ -16,6 +16,7 @@ email_sender = os.getenv("EMAIL_SENDER")
 email_password = os.getenv("EMAIL_PASSWORD")
 email_receiver = os.getenv("EMAIL_RECEIVER")
 email_cc = os.getenv("EMAIL_CC")
+env_file_path = os.getenv("FILE_PATH")
 
 
 class Email():
@@ -26,12 +27,13 @@ class Email():
         print('Sending email...')
         try:
             subject = 'Email Automation with Python'
-            body = "\n".join(["""
+            body = "\n".join([f"""
+            Hello {email_receiver}
             This is a test email, send from python script to automate the process.   
             """, message])
 
             em = EmailMessage()
-            em['From'] = email_sender
+            em['From'] = 'Contact <{sender}>'.format(sender=email_sender)
             em['To'] = email_receiver
             em['CC'] = email_cc
             em['subject'] = subject
@@ -48,10 +50,12 @@ class Email():
             print(f'Exception Occured ! \n {ex}')
 
     def sendFile(self, file_path=None):
-        print('Sending email...')
+        if file_path is None:
+            file_path = env_file_path
+        print(f'Sending email with attachment... {file_path}')
         try:
             smtp_server = 'smtp.gmail.com'
-            smtp_port = 587
+            smtp_port = 465
             subject = 'Email Attachment Automation with Python'
             em = MIMEMultipart('mixed')
             em['From'] = 'Contact <{sender}>'.format(sender=email_sender)
@@ -59,7 +63,7 @@ class Email():
             em['CC'] = 'sebastian_gvl@hotmail.com'
             em['subject'] = subject
 
-            em_content = '<h4>Hello {email_sender},<br> This is a test email with attachment, send from python script to automate the process.</h4>\n'
+            em_content = f'<h4>Hello {email_receiver},<br> This is a test email with attachment, send from python script to automate the process.</h4>\n'
             body = MIMEText(em_content, 'html')
             em.attach(body)
 

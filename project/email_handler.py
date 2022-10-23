@@ -61,7 +61,7 @@ class Email():
             em = MIMEMultipart('mixed')
             em['From'] = 'Contact <{sender}>'.format(sender=email_sender)
             em['To'] = email_receiver
-            em['CC'] = 'sebastian_gvl@hotmail.com'
+            em['CC'] = email_cc
             em['subject'] = subject
 
             em_content = f'<h4>Hello {email_receiver},<br> This is a test email with attachment, send from python script to automate the process.</h4>\n'
